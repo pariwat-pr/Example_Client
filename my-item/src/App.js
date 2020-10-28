@@ -1,7 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Container, Fade, Col, Row } from "reactstrap";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { Fragment } from "react";
 
 import MainPage from "./components/Page/MainPage";
 

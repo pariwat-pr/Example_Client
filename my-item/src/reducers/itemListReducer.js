@@ -4,7 +4,7 @@ const initialState = {
   itemlist: null,
 };
 
-export default function(state = initialState, action) {
+export default function getList(state = initialState, action) {
   switch (action.type) {
     case GET_ITEMS:
       return {

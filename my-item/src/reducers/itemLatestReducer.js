@@ -1,4 +1,4 @@
-import { GET_ITEM } from "../actions/type";
+import { GET_LATEST_ITEM } from "../actions/type";
 
 const initialState = {
   id: null,
@@ -6,15 +6,17 @@ const initialState = {
   price: null,
 };
 
-export default function(state = initialState, action) {
+export default function getlastItem(state = initialState, action) {
   switch (action.type) {
-    case GET_ITEM:
+    case GET_LATEST_ITEM:
       const itemID = action.payload;
-      return itemID ? {
+      return itemID
+        ? {
             id: action.payload.no_id,
             name: action.payload.item_name,
             price: action.payload.item_price,
-          }:{
+          }
+        : {
             id: null,
             name: null,
             price: null,

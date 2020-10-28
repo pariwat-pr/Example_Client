@@ -14,17 +14,20 @@ import {
   CardHeader,
   CardBody,
 } from "reactstrap";
-import { getLatestItem } from "../actions/itemAction";
+import { getLatestItem, addNewItem } from "../actions/itemAction";
 
 const AddItem = (props) => {
   const [LatestItem, setLatestItem] = useState(true);
-  const [LatestID, setLatestID] = useState(1);
+  const [LatestID, setLatestID] = useState(0);
+  const [NameItem, setNameItem] = useState("");
+  const [PriceItem, setPriceItem] = useState("");
   const itemLatestID = useSelector((state) => state.itemLatest.id);
 
   AddItem.propTypes = {
     getLatestItem: PropTypes.func.isRequired,
+    addNewItem: PropTypes.func.isRequired,
   };
-  const { getLatestItem } = props;
+  const { getLatestItem, addNewItem } = props;
 
   useEffect(() => {
     const getLatestID = async () => {
@@ -37,11 +40,27 @@ const AddItem = (props) => {
       }
     };
     getLatestID();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const onChange = (e) => {};
 
-  const onSubmit = (e) => {
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "itemName") {
+      setNameItem(value);
+    } else if (name === "itemPrice") {
+      setPriceItem(value);
+    }
+  };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
+
+    const newItem = await {
+      ID: LatestID + 1,
+      Name: NameItem,
+      Price: PriceItem,
+    };
+    await addNewItem(newItem);
   };
 
   return (
@@ -73,7 +92,7 @@ const AddItem = (props) => {
                     </Label>
                     <Col sm={10}>
                       <Input
-                        type="text"
+                        type="number"
                         name="itemPrice"
                         id="itemPrice"
                         onChange={onChange}
@@ -84,7 +103,7 @@ const AddItem = (props) => {
                   <FormGroup row>
                     <Col sm={{ size: 8, offset: 3 }}>
                       <Col>
-                        <Button block>คลิกเพื่อเพิ่มสินค้า {LatestID}</Button>
+                        <Button block>คลิกเพื่อเพิ่มสินค้า</Button>
                       </Col>
                       <Col sm={1} />
                     </Col>
@@ -99,4 +118,4 @@ const AddItem = (props) => {
   );
 };
 
-export default connect(null, { getLatestItem })(AddItem);
+export default connect(null, { getLatestItem, addNewItem })(AddItem);
